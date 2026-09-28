@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+<ItemGroup>
+		<None Remove="sprites/*.png" />
+		<EmbeddedResource Include="sprites/*.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+  <ItemGroup>
+		<None Remove="rooms/*.text" />
+		<EmbeddedResource Include="tooms/*.txt">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+		<ItemGroup>
+<None Remove="fonts/*.ttf" />
+<EmbeddedResource Include="fonts/*.ttf">
+<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+</EmbeddedResource>
+</ItemGroup>
+
+
+     <ItemGroup>
+		<None Remove="musik/*.wav" />
+		<EmbeddedResource Include="musik/*.wav">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="CSFML" Version="2.5.0" />
+    <PackageReference Include="SFML.Net" Version="2.5.0" />
+  </ItemGroup>
+
+</Project>
