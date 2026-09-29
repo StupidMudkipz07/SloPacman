@@ -2,6 +2,8 @@ using System.Diagnostics;
 
 class Pacman : MovableObject
 {
+    Sprite sprite;
+
     public Pacman()
     {
         int kerki6 = 36;
@@ -9,17 +11,22 @@ class Pacman : MovableObject
 
         collisionBox = new(new(), size);
         spriteName = "pacman";
+        sprite = spriteDrawer.GetSprite(spriteName);
+        moveSpeed = 100;
     }
 
     public override void Update(float deltaTime)
     {
         collisionBox.position = position;
         collisionBox.size = size;
+
+        direction = GetRandomDirection();
+        Move(deltaTime);
     }
 
     public override void Draw(RenderWindow window)
     {
-        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, new(0, 0, 18, 18));
+        spriteDrawer.DrawSprite(position, size, sprite, window, new(0, 0, 18, 18));
 
         collisionBox.DrawCollisionbox(window);
     }

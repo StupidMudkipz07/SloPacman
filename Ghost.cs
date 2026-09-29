@@ -1,9 +1,10 @@
 class Ghost : MovableObject
 {
+    IntRect tilesetPos = new(36,0,18,18);
     public Ghost()
     {
-        size = new(200, 200);
-
+        size = new(36, 36);
+        spriteName = "pacman";
         collisionBox = new(new(100, 100), size);
     }
 
@@ -15,7 +16,7 @@ class Ghost : MovableObject
 
     public override void Draw(RenderWindow window)
     {
-        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window);
+        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window,tilesetPos);
 
         collisionBox.DrawCollisionbox(window);
     }

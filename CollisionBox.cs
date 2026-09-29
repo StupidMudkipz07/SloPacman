@@ -11,8 +11,6 @@
 		this.size = size;
 	}
 
-	
-
 	public void DrawCollisionbox(RenderWindow window)
 	{
 		if (KeyboardHandler.IsKeyDown(Keyboard.Key.LShift))

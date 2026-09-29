@@ -19,34 +19,60 @@ class Room
         Room newRoom = new();
         char[] MazeData = File.ReadAllText(filePath).ToCharArray();
 
-        int tilesPerRow = 27;
+        Vector2f cursor = new(0, 0);
 
         for (int i = 0; i < MazeData.Length; i++)
         {
+
+            if (cursor.X == 27)
+            {
+                cursor.Y++;
+                cursor.X = 0;
+                System.Console.WriteLine("new row!!!!! xoxoxox");
+            }
+
+            //System.Console.WriteLine(cursor);
+            //System.Console.WriteLine(cursor * tileDistance);
+
             switch (MazeData[i])
             {
                 case 'p':
                     //spawn pacman
                     newRoom.RoomObjects.Add(new Pacman()
                     {
-                        position = new(tileDistance * i,0)
+                        position = cursor * tileDistance
                     });
+                    //System.Console.WriteLine("player!!!");
                     break;
 
                 case 'g':
-                    //spawn ghost
+                    newRoom.RoomObjects.Add(new Ghost()
+                    {
+                        position = cursor * tileDistance
+                    });
                     break;
 
                 case 'c':
-                    //spawn candy
+                    newRoom.RoomObjects.Add(new Candy()
+                    {
+                        position = cursor * tileDistance
+                    });
                     break;
 
                 case '.':
                     //spawn coin
+                    newRoom.RoomObjects.Add(new Coin()
+                    {
+                        position = cursor * tileDistance
+                    });
                     break;
 
                 case '#':
                     //spawn wall
+                    newRoom.RoomObjects.Add(new Wall()
+                    {
+                        position = cursor * tileDistance
+                    });
                     break;
 
                 case '|':
@@ -57,6 +83,7 @@ class Room
                     //empty space
                     break;
             }
+            cursor.X++;
         }
 
         System.Console.WriteLine(MazeData);
