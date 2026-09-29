@@ -4,9 +4,10 @@ class Pacman : MovableObject
 {
     public Pacman()
     {
-        size = new(200, 200);
+        int kerki6 = 36;
+        size = new(kerki6, kerki6);
 
-        collisionBox = new(new(100, 100), size);
+        collisionBox = new(new(), size);
         spriteName = "pacman";
     }
 
