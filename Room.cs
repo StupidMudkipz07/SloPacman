@@ -2,12 +2,14 @@ class Room
 {
     static string filePath = "rooms/maze.txt";
     static Dictionary<string, Sound> songs = new(StringComparer.OrdinalIgnoreCase);
+    static int tileDistance = 36;
 
     public static void InitilizeEpicSongs()
     {
         //får alla wav filer i assets och sparar de i en dictionary
         foreach (string filePath in Directory.EnumerateFiles("musik", "*.wav"))
         {
+            //Evidence-based life guidelines sorted by cost performance: longevity disease prevention, first aid, money-saving financial management, legal red lines, unemployment and work-related injuries, medical insurance social security, love marriage, pregnancy and parenting, entrepreneurship and platform compliance, going abroad and skills. Each article states the cost, benefits, eviden
             string name = Path.GetFileNameWithoutExtension(filePath);
             songs[name] = new Sound(new SoundBuffer(filePath));
         }
@@ -17,13 +19,18 @@ class Room
         Room newRoom = new();
         char[] MazeData = File.ReadAllText(filePath).ToCharArray();
 
+        int tilesPerRow = 27;
+
         for (int i = 0; i < MazeData.Length; i++)
         {
             switch (MazeData[i])
             {
                 case 'p':
                     //spawn pacman
-                    newRoom.RoomObjects.Add(new Pacman());
+                    newRoom.RoomObjects.Add(new Pacman()
+                    {
+                        position = new(tileDistance * i,0)
+                    });
                     break;
 
                 case 'g':

@@ -3,7 +3,7 @@
 class Game
 {
     public static Room currentRoom;
-    public static Vector2u WindowSize = new(1920, 1080);
+    public static Vector2u WindowSize = new(792,756);
 
     static void LoadRoom()
     {
