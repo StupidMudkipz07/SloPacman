@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 class Pacman : MovableObject
 {
     public Pacman()
@@ -16,7 +18,7 @@ class Pacman : MovableObject
 
     public override void Draw(RenderWindow window)
     {
-        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, new(0, 0, 24, 24));
+        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, new(0, 0, 18, 18));
 
         collisionBox.DrawCollisionbox(window);
     }
