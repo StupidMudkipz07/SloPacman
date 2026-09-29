@@ -1,4 +1,4 @@
-class Pacman : RoomObject
+class Pacman : MovableObject
 {
     public Pacman()
     {

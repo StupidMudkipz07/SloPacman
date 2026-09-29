@@ -1,4 +1,4 @@
-class Ghost : RoomObject
+class Ghost : MovableObject
 {
     public Ghost()
     {
