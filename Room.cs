@@ -14,6 +14,7 @@ class Room
             songs[name] = new Sound(new SoundBuffer(filePath));
         }
     }
+   
     public static Room MakeRoomFromRoomData()
     {
         Room newRoom = new();
@@ -23,17 +24,14 @@ class Room
 
         for (int i = 0; i < MazeData.Length; i++)
         {
-
             if (cursor.X == 27)
             {
                 cursor.Y++;
                 cursor.X = 0;
                 System.Console.WriteLine("new row!!!!! xoxoxox");
             }
-
             //System.Console.WriteLine(cursor);
             //System.Console.WriteLine(cursor * tileDistance);
-
             switch (MazeData[i])
             {
                 case 'p':
@@ -76,7 +74,10 @@ class Room
                     break;
 
                 case '|':
-                    //spawn something
+                     newRoom.RoomObjects.Add(new Border()
+                    {
+                        position = cursor * tileDistance
+                    });
                     break;
 
                 case ' ':
@@ -90,7 +91,6 @@ class Room
 
         return newRoom;
     }
-
 
     public List<RoomObject> RoomObjects;
     string spriteName;
@@ -143,5 +143,4 @@ class Room
         //😂😂
         if (songs.TryGetValue(songName, out Sound sound)) sound.Play();
     }
-
 }

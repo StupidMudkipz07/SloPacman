@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 class Pacman : MovableObject
 {
     Sprite sprite;
@@ -20,7 +18,9 @@ class Pacman : MovableObject
         collisionBox.position = position;
         collisionBox.size = size;
 
-        direction = GetRandomDirection();
+        //direction = GetRandomDirection();
+
+        direction = GetDirection();
         Move(deltaTime);
     }
 

@@ -2,9 +2,8 @@ class Border : RoomObject
 {
     public Border()
     {
-        size = new(200, 200);
-
-        collisionBox = new(new(100, 100), size);
+        size = new(36, 36);
+        collisionBox = new(new(), size);
     }
 
     public override void Update(float deltaTime)
@@ -15,13 +14,11 @@ class Border : RoomObject
 
     public override void Draw(RenderWindow window)
     {
-        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window);
-
         collisionBox.DrawCollisionbox(window);
     }
 
     public override void RoomStart()
     {
-        spriteDrawer.InitializeSprites([spriteName]);
+
     }
 }
