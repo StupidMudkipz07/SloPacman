@@ -58,18 +58,19 @@ class SpriteDrawer
         window.Draw(sprite);
     }
 
-    public void DrawSprite(Vector2f position, Vector2f size, Sprite sprite, RenderWindow window, bool flip, IntRect region)
+    //this one is for rotation
+    public void DrawSprite(Vector2f position, Vector2f size, Sprite sprite, Vector2f rotationVector, RenderWindow window, IntRect region)
     {
-        Sprite spriteToDraw = DivideSprite(position, size, sprite, region);
+        Sprite sprite1 = DivideSprite(position, size, sprite, region);
+        // nu gibbar vi lite matte 3
+        float angle = MathF.Atan2(rotationVector.Y, rotationVector.X) * 180f / MathF.PI;
 
-        Vector2f scale = new Vector2f(size.X / region.Width, size.Y / region.Height);
-        scale.X = flip ? -Math.Abs(scale.X) : Math.Abs(scale.X);
+        sprite1.Position = position + size / 2f;
+        sprite1.Rotation = angle;
 
-        spriteToDraw.Scale = scale;
-        spriteToDraw.Position = position + new Vector2f(size.X / 2f, size.Y / 2f);
-
-        window.Draw(spriteToDraw);
+        window.Draw(sprite1);
     }
+
 
     Sprite DivideSprite(Vector2f position, Vector2f size, Sprite sprite, IntRect region)
     {

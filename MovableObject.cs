@@ -2,7 +2,19 @@ abstract class MovableObject : RoomObject
 {
     protected Vector2f direction = new();
 
+    protected Vector2f startpos;
+
     public float moveSpeed;
+
+    protected void SetStartPos()
+    {
+        startpos = position;
+    }
+
+    public void Reset()
+    {
+        position = startpos;
+    }
 
     protected Vector2f GetRandomDirection()
     {
@@ -24,7 +36,7 @@ abstract class MovableObject : RoomObject
 
     protected Vector2f GetDirection()
     {
-        Vector2f inputDirection = new(0,0);
+        Vector2f inputDirection = new(0, 0);
         if (KeyboardHandler.IsKeyDown(Keyboard.Key.A))
         {
             inputDirection = new Vector2f(-1, 0);
@@ -42,7 +54,7 @@ abstract class MovableObject : RoomObject
             inputDirection = new Vector2f(0, 1);
         }
 
-         return inputDirection;
+        return inputDirection;
     }
 
     protected void Move(float deltaTime)
@@ -50,9 +62,9 @@ abstract class MovableObject : RoomObject
         IfOutOfBounds();
         position = FixAlignment(position);
 
-		Vector2f positionToMove = position;
+        Vector2f positionToMove = position;
         positionToMove += direction * deltaTime * moveSpeed;
-		
+
         if (WillIntersect(positionToMove))
         {
             positionToMove = position;
@@ -74,17 +86,17 @@ abstract class MovableObject : RoomObject
         {
             posetivCheck++;
         }
-		while (MathF.Floor(currentPos + negativeCheck) % 36 != 0)
-		{
-			negativeCheck--;
-		}
+        while (MathF.Floor(currentPos + negativeCheck) % 36 != 0)
+        {
+            negativeCheck--;
+        }
 
         float temp = MathF.Min(posetivCheck, MathF.Abs(negativeCheck));
         if (temp == MathF.Abs(negativeCheck))
             temp = negativeCheck;
 
-		return currentPos + temp;
-	}
+        return currentPos + temp;
+    }
 
     public bool WillIntersect(Vector2f position)
     {
@@ -94,35 +106,35 @@ abstract class MovableObject : RoomObject
         {
             if (wall is Wall)
             {
-				if (wall.collisionBox.collisionBoxRect.Intersects(positionFloatRect))
-					return true;
-			}
+                if (wall.collisionBox.collisionBoxRect.Intersects(positionFloatRect))
+                    return true;
+            }
         }
         return false;
     }
 
     public Vector2f FixAlignment(Vector2f position)
     {
-		if (!IsAligned())
-		{
-			if (direction.X != 0)
-			{
-				if (MathF.Floor(position.Y) % 36 != 0)
-				{
-					position.Y = Cloasest36(position.Y);
-				}
-			}
-			if (direction.Y != 0)
-			{
-				if (MathF.Floor(position.X) % 36 != 0)
-				{
-					position.X = Cloasest36(position.X);
-				}
-			}
-		}
+        if (!IsAligned())
+        {
+            if (direction.X != 0)
+            {
+                if (MathF.Floor(position.Y) % 36 != 0)
+                {
+                    position.Y = Cloasest36(position.Y);
+                }
+            }
+            if (direction.Y != 0)
+            {
+                if (MathF.Floor(position.X) % 36 != 0)
+                {
+                    position.X = Cloasest36(position.X);
+                }
+            }
+        }
 
         return position;
-	}
+    }
 
     public void IfOutOfBounds()
     {
@@ -130,33 +142,72 @@ abstract class MovableObject : RoomObject
             position.X = 900;
         if (position.X > 900)
             position.X = 0 - size.X;
-	}
+    }
 
-	public List<Vector2f> GetValidDirections(float deltaTime)
-	{
-		List<Vector2f> validDirections = new List<Vector2f>();
-		Vector2f[] directions = new Vector2f[4];
-		{ directions[0] = new Vector2f(1, 0); directions[1] = new Vector2f(-1, 0); directions[2] = new Vector2f(0, 1); directions[3] = new Vector2f(0, -1); }
+    public List<Vector2f> GetValidDirections(float deltaTime)
+    {
+        List<Vector2f> validDirections = new List<Vector2f>();
+        Vector2f[] directions = new Vector2f[4];
+        { directions[0] = new Vector2f(1, 0); directions[1] = new Vector2f(-1, 0); directions[2] = new Vector2f(0, 1); directions[3] = new Vector2f(0, -1); }
 
-		foreach (Vector2f direction in directions)
-		{
-			Vector2f dirToMove = direction;
-			//prevent going backwards
-			if (dirToMove == this.direction * -1)
-				continue;
+        foreach (Vector2f direction in directions)
+        {
+            Vector2f dirToMove = direction;
+            //prevent going backwards
+            if (dirToMove == this.direction * -1)
+                continue;
 
-			Vector2f positionToMove = position;
-			positionToMove += direction * deltaTime * moveSpeed;
+            Vector2f positionToMove = position;
+            positionToMove += direction * deltaTime * moveSpeed;
 
-			if (WillIntersect(positionToMove))
-				continue;
+            if (WillIntersect(positionToMove))
+                continue;
 
-			validDirections.Add(direction);
+            validDirections.Add(direction);
+        }
+        return validDirections;
+    }
 
+    //denna funktion låter bara objekt kollidera med andra objekt som skapades innan sig själv
+    //detta beror på denna lustiga maze
+/*
+    |#######################|
+|#..........#..........#|
+|#.### #### # #### ###.#|
+|#.  ..............   .#|
+|#.###.# ####### #.###.#|
+|#.....#    #    #.....#|
+|#####.#### # ####.#####|
+|    #.#         #.#    |
+|    #.# ### ### #.#    |
+######.# #ggggg# #.######
+|     .  #g###g#  .     |
+######.# #ggggg# #.######
+|    #.# ####### #.#    |
+|    #.#   .c.   #.#    |
+|#####.####.#.####.#####|
+|#.....#....#....#.....#|
+|#.###.#.#######.#.###.#|
+|#.   ...   p   ...   .#|
+|#.###.#### # ####.###.#|
+|#..........#..........#|
+|#######################|
 
-		}
+*/
+//spelaren kan bara äta coins som skapades innan honom men inte de n
+    public RoomObject? CheckCollision()
+    {
+        for (int i = 0; i <  Game.currentRoom.RoomObjects.Count; i++)
+        {
+            RoomObject? roomObject =  Game.currentRoom.RoomObjects[i];
+            CollisionBox? otherCollisionBox = roomObject.collisionBox;
+            //väggar har annan kollisions logik
+            if(roomObject is Wall) continue;
 
-		return validDirections;
-	}
+            //fakitiska collisions checken
+            if (collisionBox.collisionBoxRect.Intersects(otherCollisionBox.collisionBoxRect) )return roomObject;
+        }
 
+        return null;
+    }
 }

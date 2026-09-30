@@ -144,11 +144,13 @@ class Room
             RoomObjects[i].Draw(window);
         }
 
-        ScoreText.Position = new Vector2f(0, 800-ScoreText.CharacterSize);
+        ScoreText.Position = new Vector2f(0, 900 - ScoreText.CharacterSize);
         ScoreText.DisplayedString = $"SCORE: {Game.score}";
         window.Draw(ScoreText);
-
-
+        
+        ScoreText.Position = new Vector2f(0, 900 -10 - ScoreText.CharacterSize * 2);
+        ScoreText.DisplayedString = $"HEALTH: {Game.health}";
+        window.Draw(ScoreText);
     }
 
     void PlayMusic(string songName)

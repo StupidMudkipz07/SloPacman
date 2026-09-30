@@ -12,7 +12,6 @@ abstract class RoomObject
 	{
 		//Game.currentRoom.RoomObjects.Add(this);
 		spriteDrawer = new();
-		
 	}
 
 	abstract public void RoomStart();

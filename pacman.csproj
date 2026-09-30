@@ -28,6 +28,13 @@
 </EmbeddedResource>
 </ItemGroup>
 
+	<ItemGroup>
+<None Remove="scores/*.json" />
+<EmbeddedResource Include="scores/*.json">
+<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+</EmbeddedResource>
+</ItemGroup>
+
      <ItemGroup>
 		<None Remove="musik/*.wav" />
 		<EmbeddedResource Include="musik/*.wav">

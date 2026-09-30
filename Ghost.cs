@@ -1,7 +1,18 @@
 class Ghost : MovableObject
 {
-    public bool IsEatable = true;
-    IntRect tilesetPos = new(36,0,18,18);
+    public bool IsAdolfKirkable { get; private set; } = false;
+
+    public void MakeAdolfKirkable()
+    {
+        IsAdolfKirkable = true;
+        //start timer here
+    }
+
+    IntRect tilesetPos = new(36, 0, 18, 18);
+    IntRect tilesetPos2 = new(54, 0, 18, 18);
+    IntRect tilesetPosKirkable = new(36, 18, 18, 18);
+    IntRect tilesetPosKirkable2 = new(54, 18, 18, 18);
+
     public Ghost()
     {
         size = new(36, 36);
@@ -14,21 +25,45 @@ class Ghost : MovableObject
     {
         collisionBox.position = position;
         collisionBox.size = size;
+        SetDirection(deltaTime);
 
+        Move(deltaTime);
+    }
+
+    void SetDirection(float deltaTime)
+    {
         Random random = new Random();
         var validDirctions = GetValidDirections(deltaTime);
         if (validDirctions.Count == 0)
             direction = new Vector2f(0, 0);
         else
             direction = validDirctions[random.Next(0, validDirctions.Count)];
+    }
 
-		Move(deltaTime);
-        Collide();
-	}
 
+    int slop = 0;
     public override void Draw(RenderWindow window)
     {
-        spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window,tilesetPos);
+        slop++;
+        if (!IsAdolfKirkable)
+        {
+            if (slop < 10)
+                spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, tilesetPos);
+            else if (slop > 10)
+            {
+                spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, tilesetPos2);
+            }
+        }
+        else
+        {
+            if (slop < 10)
+                spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, tilesetPosKirkable);
+            else if (slop > 10)
+            {
+                spriteDrawer.DrawSprite(position, size, spriteDrawer.GetSprite(spriteName), window, tilesetPosKirkable2);
+            }
+        }
+        if (slop > 20) slop = 0;
 
         collisionBox.DrawCollisionbox(window);
     }
@@ -36,22 +71,20 @@ class Ghost : MovableObject
     public override void RoomStart()
     {
         spriteDrawer.InitializeSprites([spriteName]);
-        System.Console.WriteLine(E(500));
+        SetStartPos();
     }
-
-    public void Collide()
+    
+    //den här funtioen funkar bara inte ibland
+    //mer specifikt den funkar inte när isadolfkirkable blir true av någon anleding
+    public void OnCollideWithPacman()
     {
-        var pacMannens = Game.currentRoom.RoomObjects.Where(c => c is PacMannen).ToList();
-        PacMannen pacMannen = pacMannens[0] as PacMannen;
-        
-        if (collisionBox.collisionBoxRect.Intersects(pacMannen.collisionBox.collisionBoxRect))
+        System.Console.WriteLine("hit");
+        if (IsAdolfKirkable)
         {
-            if (IsEatable)
-            {
-                IsEatable = false;
-                  //spriteDrawer.GetSprite(spriteName) = spriteDrawer.GetSprite(spriteName)
-                Game.score += E(100);
-            }
+            IsAdolfKirkable = false;
+            Reset();
+            System.Console.WriteLine("itadakimasu");
+            Game.score += E(100);
         }
     }
 
@@ -66,5 +99,15 @@ class Ghost : MovableObject
         }
 
         return result;
+    }
+
+    public static void MakeAllAdolfKirkable()
+    {
+        Ghost[] sloppa = Game.currentRoom.RoomObjects.OfType<Ghost>().ToArray();
+
+        foreach (var Slopparen in sloppa)
+        {
+            Slopparen.MakeAdolfKirkable();
+        }
     }
 }

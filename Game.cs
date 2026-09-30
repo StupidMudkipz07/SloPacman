@@ -5,7 +5,8 @@ class Game
     static public int health = 3;
     static public decimal score = 0;
     public static Room currentRoom;
-    public static Vector2u WindowSize = new(900, 800);
+    public static Vector2u WindowSize = new(900, 900);
+    public static string saveFilePath = "scores/scores.json";
 
     static void LoadRoom()
     {
@@ -13,6 +14,10 @@ class Game
         currentRoom.StartRoom();
     }
 
+    static void SaveGame(string filePath)
+    {
+
+    }
 
     internal static void StartGame()
     {
