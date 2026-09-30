@@ -131,5 +131,32 @@ abstract class MovableObject : RoomObject
         if (position.X > 900)
             position.X = 0 - size.X;
 	}
-  
+
+	public List<Vector2f> GetValidDirections(float deltaTime)
+	{
+		List<Vector2f> validDirections = new List<Vector2f>();
+		Vector2f[] directions = new Vector2f[4];
+		{ directions[0] = new Vector2f(1, 0); directions[1] = new Vector2f(-1, 0); directions[2] = new Vector2f(0, 1); directions[3] = new Vector2f(0, -1); }
+
+		foreach (Vector2f direction in directions)
+		{
+			Vector2f dirToMove = direction;
+			//prevent going backwards
+			if (dirToMove == this.direction * -1)
+				continue;
+
+			Vector2f positionToMove = position;
+			positionToMove += direction * deltaTime * moveSpeed;
+
+			if (WillIntersect(positionToMove))
+				continue;
+
+			validDirections.Add(direction);
+
+
+		}
+
+		return validDirections;
+	}
+
 }
