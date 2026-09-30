@@ -1,5 +1,6 @@
 class Ghost : MovableObject
 {
+    public bool IsEatable = true;
     IntRect tilesetPos = new(36,0,18,18);
     public Ghost()
     {
@@ -22,6 +23,7 @@ class Ghost : MovableObject
             direction = validDirctions[random.Next(0, validDirctions.Count)];
 
 		Move(deltaTime);
+        Collide();
 	}
 
     public override void Draw(RenderWindow window)
@@ -34,7 +36,35 @@ class Ghost : MovableObject
     public override void RoomStart()
     {
         spriteDrawer.InitializeSprites([spriteName]);
+        System.Console.WriteLine(E(500));
     }
 
-    
+    public void Collide()
+    {
+        var pacMannens = Game.currentRoom.RoomObjects.Where(c => c is PacMannen).ToList();
+        PacMannen pacMannen = pacMannens[0] as PacMannen;
+        
+        if (collisionBox.collisionBoxRect.Intersects(pacMannen.collisionBox.collisionBoxRect))
+        {
+            if (IsEatable)
+            {
+                IsEatable = false;
+                  //spriteDrawer.GetSprite(spriteName) = spriteDrawer.GetSprite(spriteName)
+                Game.score += E(100);
+            }
+        }
+    }
+
+    public decimal E(int precision)
+    {
+        decimal result = 1;
+        decimal item = 1;
+
+        for (decimal i = 1; i < precision; ++i)
+        {
+            result += item /= i;
+        }
+
+        return result;
+    }
 }

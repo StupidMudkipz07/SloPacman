@@ -14,7 +14,7 @@ class Room
             songs[name] = new Sound(new SoundBuffer(filePath));
         }
     }
-   
+
     public static Room MakeRoomFromRoomData()
     {
         Room newRoom = new();
@@ -28,7 +28,7 @@ class Room
             {
                 cursor.Y++;
                 cursor.X = 0;
-                System.Console.WriteLine("new row!!!!! xoxoxox");
+                //System.Console.WriteLine("new row!!!!! xoxoxox");
             }
             //System.Console.WriteLine(cursor);
             //System.Console.WriteLine(cursor * tileDistance);
@@ -36,7 +36,7 @@ class Room
             {
                 case 'p':
                     //spawn pacman
-                    newRoom.RoomObjects.Add(new Pacman()
+                    newRoom.RoomObjects.Add(new PacMannen()
                     {
                         position = cursor * tileDistance
                     });
@@ -74,12 +74,11 @@ class Room
                     break;
 
                 case '|':
-                     newRoom.RoomObjects.Add(new Border()
+                    newRoom.RoomObjects.Add(new Border()
                     {
                         position = cursor * tileDistance
                     });
                     break;
-
                 case ' ':
                     //empty space
                     break;
@@ -96,24 +95,32 @@ class Room
     string spriteName;
     SpriteDrawer backGroundDrawer;
     public string songName;
+    Text ScoreText;
+
 
     Room()
     {
         backGroundDrawer = new();
         RoomObjects = new();
-        songName = "sng";
+        songName = "song";
         spriteName = "red";
+        ScoreText = new()
+        {
+            CharacterSize = 30,
+            Font = new Font("fonts/saturno.ttf"),
+            FillColor = Color.Red,
+            OutlineThickness = 10,
+            OutlineColor = Color.Black
+        };
     }
 
     public void StartRoom()
     {
-
         for (int i = 0; i < RoomObjects.Count; i++)
         {
             //först uppdatera alla värden
             RoomObjects[i].RoomStart();
         }
-
         PlayMusic(songName);
     }
 
@@ -136,11 +143,18 @@ class Room
         {
             RoomObjects[i].Draw(window);
         }
+
+        ScoreText.Position = new Vector2f(0, 800-ScoreText.CharacterSize);
+        ScoreText.DisplayedString = $"SCORE: {Game.score}";
+        window.Draw(ScoreText);
+
+
     }
 
     void PlayMusic(string songName)
     {
         //😂😂
         if (songs.TryGetValue(songName, out Sound sound)) sound.Play();
+
     }
 }

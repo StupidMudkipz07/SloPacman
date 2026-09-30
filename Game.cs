@@ -2,8 +2,10 @@
 // this class should handle room switching
 class Game
 {
+    static public int health = 3;
+    static public decimal score = 0;
     public static Room currentRoom;
-    public static Vector2u WindowSize = new(900,756);
+    public static Vector2u WindowSize = new(900, 800);
 
     static void LoadRoom()
     {
@@ -14,7 +16,7 @@ class Game
 
     internal static void StartGame()
     {
-        using (var window = new RenderWindow(new VideoMode(WindowSize.X, WindowSize.Y), "Plattslopper"))
+        using (var window = new RenderWindow(new VideoMode(WindowSize.X, WindowSize.Y), "Pacslopper"))
         {
             window.SetFramerateLimit(60);
             window.Closed += (o, e) => window.Close();

@@ -1,8 +1,8 @@
-class Pacman : MovableObject
+class PacMannen : MovableObject
 {
     Sprite sprite;
 
-    public Pacman()
+    public PacMannen()
     {
         int kerki6 = 36;
         size = new(kerki6, kerki6);
