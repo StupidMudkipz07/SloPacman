@@ -1,8 +1,11 @@
 class Ghost : MovableObject
 {
     public bool IsAdolfKirkable { get; private set; } = false;
+    public float IsAdolfKirkableTime = 0;
+    public float MaxIsAdolfKirkableTime = 10;
 
-    public void MakeAdolfKirkable()
+
+	public void MakeAdolfKirkable()
     {
         IsAdolfKirkable = true;
         //start timer here
@@ -25,9 +28,12 @@ class Ghost : MovableObject
     {
         collisionBox.position = position;
         collisionBox.size = size;
-        SetDirection(deltaTime);
 
+        SetDirection(deltaTime);
         Move(deltaTime);
+
+        if (IsAdolfKirkable)
+            OutOfIsAdolfKirkableTime(deltaTime);
     }
 
     void SetDirection(float deltaTime)
@@ -84,6 +90,7 @@ class Ghost : MovableObject
             IsAdolfKirkable = false;
             Reset();
             System.Console.WriteLine("itadakimasu");
+            IsAdolfKirkableTime = 0;
             Game.score += E(100);
         }
     }
@@ -108,6 +115,17 @@ class Ghost : MovableObject
         foreach (var Slopparen in sloppa)
         {
             Slopparen.MakeAdolfKirkable();
+        }
+    }
+
+    public void OutOfIsAdolfKirkableTime(float deltaTime)
+    {
+        IsAdolfKirkableTime += deltaTime;
+
+        if (IsAdolfKirkableTime >= MaxIsAdolfKirkableTime)
+        {
+            IsAdolfKirkable = false;
+            IsAdolfKirkableTime = 0;
         }
     }
 }

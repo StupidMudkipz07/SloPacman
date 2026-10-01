@@ -43,8 +43,44 @@ class Game
                 currentRoom.Update(deltaTime);
                 currentRoom.Draw(window);
 
+                if (health <= 0)
+                {
+                    foreach (RoomObject roomObject in currentRoom.RoomObjects)
+                        roomObject.remove = true;
+
+                    LoadRoom();
+                    health = 3;
+                    score = 0;
+                }
+
+                List<Coin> coins = currentRoom.RoomObjects.Where(c => c is Coin).Select(c => c as Coin).ToList();
+				if (AllCoinsCollected(coins))
+                {
+                    foreach (Coin coin in coins)
+                    {
+                        coin.Reset();
+                        coin.isCollected = false;
+                    }
+                }
+
                 window.Display();
             }
         }
+    }
+
+    public static bool AllCoinsCollected(List<Coin> coins)
+    {
+        int coinsCollected = 0;
+
+        foreach (Coin coin in coins)
+        {
+            if (coin.isCollected == true)
+                coinsCollected++;
+        }
+
+        if (coinsCollected == coins.Count())
+            return true;
+
+        return false;
     }
 }

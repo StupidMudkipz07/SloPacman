@@ -2,19 +2,7 @@ abstract class MovableObject : RoomObject
 {
     protected Vector2f direction = new();
 
-    protected Vector2f startpos;
-
     public float moveSpeed;
-
-    protected void SetStartPos()
-    {
-        startpos = position;
-    }
-
-    public void Reset()
-    {
-        position = startpos;
-    }
 
     protected Vector2f GetRandomDirection()
     {
@@ -205,7 +193,7 @@ abstract class MovableObject : RoomObject
             if(roomObject is Wall) continue;
 
             //fakitiska collisions checken
-            if (collisionBox.collisionBoxRect.Intersects(otherCollisionBox.collisionBoxRect) )return roomObject;
+            if (collisionBox.collisionBoxRect.Intersects(otherCollisionBox.collisionBoxRect)) return roomObject;
         }
 
         return null;

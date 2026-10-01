@@ -1,6 +1,6 @@
 class Room
 {
-    static string filePath = "rooms/maze.txt";
+    static string filePath = "rooms/mazeTest.txt";
     static Dictionary<string, Sound> songs = new(StringComparer.OrdinalIgnoreCase);
     static int tileDistance = 36;
 

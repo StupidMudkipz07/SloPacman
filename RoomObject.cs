@@ -2,6 +2,7 @@
 abstract class RoomObject
 {
 	public Vector2f position;
+	protected Vector2f startpos;
 	public Vector2f size;
 	public string spriteName;
 	protected SpriteDrawer spriteDrawer;
@@ -19,4 +20,15 @@ abstract class RoomObject
 	abstract public void Update(float deltaTime);
 
 	abstract public void Draw(RenderWindow window);
+
+	protected void SetStartPos()
+	{
+		startpos = position;
+	}
+
+	public void Reset()
+	{
+		position = startpos;
+	}
+
 }

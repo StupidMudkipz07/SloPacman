@@ -48,18 +48,21 @@ class PacMannen : MovableObject
         if (båt is Ghost)
         {
             var kött = båt as Ghost;
-            if (!kött.IsAdolfKirkable)
-            {
-                kött.OnCollideWithPacman();
-                Reset();
-                Game.health--;
-            }
+
+			if (!kött.IsAdolfKirkable)
+			{
+				Game.health--;
+				Reset();
+			}
+			kött.OnCollideWithPacman();
         }
         else if (båt is Coin)
         {
             var kött = båt as Coin;
             Game.score++;
-            kött.remove = true;
+            kött.isCollected = true;
+            kött.position.X += 10000;
+            kött.collisionBox.position.X += 10000;
         }
         else if (båt is Candy)
         {
