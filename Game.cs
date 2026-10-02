@@ -80,12 +80,16 @@ static class Game
 
                 List<Coin> coins = currentRoom.RoomObjects.Where(c => c is Coin).Select(c => c as Coin).ToList();
                 if (AllCoinsCollected(coins))
-                {
+                {   
+                    foreach (RoomObject roomObject in currentRoom.RoomObjects) roomObject.remove = true;
+                    LoadRoom();
+                    /*
                     foreach (Coin coin in coins)
                     {
                         coin.Reset();
                         coin.isCollected = false;
                     }
+                    */
                 }
 
                 window.Display();
