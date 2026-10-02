@@ -21,6 +21,8 @@ class PacMannen : MovableObject
         direction = GetDirection();
         Move(deltaTime);
         Collision();
+
+        SpawnInvinsibility();
     }
 
     int slop = 0;
@@ -48,6 +50,9 @@ class PacMannen : MovableObject
         if (båt is Ghost)
         {
             var kött = båt as Ghost;
+
+            if (isNewBorn || kött.isNewBorn)
+                return;
 
 			if (!kött.IsAdolfKirkable)
 			{
@@ -78,5 +83,6 @@ class PacMannen : MovableObject
     {
         spriteDrawer.InitializeSprites([spriteName]);
         SetStartPos();
+        isNewBorn = true;
     }
 }

@@ -86,7 +86,7 @@ class Room
             cursor.X++;
         }
 
-        System.Console.WriteLine(MazeData);
+        //System.Console.WriteLine(MazeData);
 
         return newRoom;
     }
@@ -101,11 +101,11 @@ class Room
     {
         backGroundDrawer = new();
         RoomObjects = new();
-        songName = "song";
+        songName = "litefinpianomusik";
         spriteName = "red";
         ScoreText = new()
         {
-            CharacterSize = 30,
+            CharacterSize = 20,
             Font = new Font("fonts/saturno.ttf"),
             FillColor = Color.Red,
             OutlineThickness = 10,

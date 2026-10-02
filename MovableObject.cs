@@ -1,8 +1,14 @@
+using System.Diagnostics;
+
 abstract class MovableObject : RoomObject
 {
     protected Vector2f direction = new();
 
     public float moveSpeed;
+
+    Stopwatch InvincibleTimer = new();
+
+    public bool isNewBorn/*Hej jag älskar småbarn vad heter du?*/ = false;
 
     protected Vector2f GetRandomDirection()
     {
@@ -161,17 +167,44 @@ abstract class MovableObject : RoomObject
     //spelaren kan bara äta coins som skapades innan honom men inte de n
     public RoomObject? CheckCollision()
     {
-        for (int i = 0; i <  Game.currentRoom.RoomObjects.Count; i++)
+        for (int i = 0; i < Game.currentRoom.RoomObjects.Count; i++)
         {
-            RoomObject? roomObject =  Game.currentRoom.RoomObjects[i];
+            RoomObject? roomObject = Game.currentRoom.RoomObjects[i];
             CollisionBox? otherCollisionBox = roomObject.collisionBox;
             //väggar har annan kollisions logik
-            if(roomObject is Wall) continue;
+            if (roomObject is Wall) continue;
 
             //fakitiska collisions checken
             if (collisionBox.collisionBoxRect.Intersects(otherCollisionBox.collisionBoxRect)) return roomObject;
         }
 
         return null;
+    }
+
+    public void SpawnInvinsibility()
+    {
+        if (isNewBorn)
+        {
+            if (!InvincibleTimer.IsRunning)
+                InvincibleTimer.Start();
+
+            if (1000 >= (int)(InvincibleTimer.ElapsedMilliseconds))
+            {
+                position = startpos;
+            }
+            else
+            {
+                InvincibleTimer.Stop();
+                InvincibleTimer.Reset();
+                isNewBorn = false;
+            }
+        }
+       // System.Console.WriteLine(InvincibleTimer.ElapsedMilliseconds);
+    }
+
+    public override void Reset()
+    {
+        isNewBorn = true;
+        base.Reset();
     }
 }

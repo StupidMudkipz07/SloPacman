@@ -4,7 +4,6 @@ class Ghost : MovableObject
     public float IsAdolfKirkableTime = 0;
     public float MaxIsAdolfKirkableTime = 10;
 
-
 	public void MakeAdolfKirkable()
     {
         IsAdolfKirkable = true;
@@ -34,6 +33,8 @@ class Ghost : MovableObject
 
         if (IsAdolfKirkable)
             OutOfIsAdolfKirkableTime(deltaTime);
+
+        SpawnInvinsibility();
     }
 
     void SetDirection(float deltaTime)
@@ -78,18 +79,19 @@ class Ghost : MovableObject
     {
         spriteDrawer.InitializeSprites([spriteName]);
         SetStartPos();
+        isNewBorn = true;
     }
     
     //den här funtioen funkar bara inte ibland
     //mer specifikt den funkar inte när isadolfkirkable blir true av någon anleding
     public void OnCollideWithPacman()
     {
-        System.Console.WriteLine("hit");
+        //System.Console.WriteLine("hit");
         if (IsAdolfKirkable)
         {
             IsAdolfKirkable = false;
             Reset();
-            System.Console.WriteLine("itadakimasu");
+            //System.Console.WriteLine("itadakimasu");
             IsAdolfKirkableTime = 0;
             Game.score += Game.E(100);
         }

@@ -26,7 +26,7 @@ abstract class RoomObject
 		startpos = position;
 	}
 
-	public void Reset()
+	public virtual void Reset()
 	{
 		position = startpos;
 	}
