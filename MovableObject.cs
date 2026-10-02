@@ -158,31 +158,7 @@ abstract class MovableObject : RoomObject
 
     //denna funktion låter bara objekt kollidera med andra objekt som skapades innan sig själv
     //detta beror på denna lustiga maze
-/*
-    |#######################|
-|#..........#..........#|
-|#.### #### # #### ###.#|
-|#.  ..............   .#|
-|#.###.# ####### #.###.#|
-|#.....#    #    #.....#|
-|#####.#### # ####.#####|
-|    #.#         #.#    |
-|    #.# ### ### #.#    |
-######.# #ggggg# #.######
-|     .  #g###g#  .     |
-######.# #ggggg# #.######
-|    #.# ####### #.#    |
-|    #.#   .c.   #.#    |
-|#####.####.#.####.#####|
-|#.....#....#....#.....#|
-|#.###.#.#######.#.###.#|
-|#.   ...   p   ...   .#|
-|#.###.#### # ####.###.#|
-|#..........#..........#|
-|#######################|
-
-*/
-//spelaren kan bara äta coins som skapades innan honom men inte de n
+    //spelaren kan bara äta coins som skapades innan honom men inte de n
     public RoomObject? CheckCollision()
     {
         for (int i = 0; i <  Game.currentRoom.RoomObjects.Count; i++)

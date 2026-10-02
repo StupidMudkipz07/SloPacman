@@ -97,7 +97,6 @@ class Room
     public string songName;
     Text ScoreText;
 
-
     Room()
     {
         backGroundDrawer = new();

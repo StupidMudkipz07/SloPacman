@@ -91,21 +91,8 @@ class Ghost : MovableObject
             Reset();
             System.Console.WriteLine("itadakimasu");
             IsAdolfKirkableTime = 0;
-            Game.score += E(100);
+            Game.score += Game.E(100);
         }
-    }
-
-    public decimal E(int precision)
-    {
-        decimal result = 1;
-        decimal item = 1;
-
-        for (decimal i = 1; i < precision; ++i)
-        {
-            result += item /= i;
-        }
-
-        return result;
     }
 
     public static void MakeAllAdolfKirkable()

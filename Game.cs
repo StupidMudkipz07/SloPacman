@@ -1,7 +1,21 @@
+using System.Text.Json;
 
-// this class should handle room switching
-class Game
+static class Game
 {
+    //matte snillet
+    static public decimal E(int precision)
+    {
+        decimal result = 1;
+        decimal item = 1;
+
+        for (decimal i = 1; i < precision; ++i)
+        {
+            result += item /= i;
+        }
+
+        return result;
+    }
+
     static public int health = 3;
     static public decimal score = 0;
     public static Room currentRoom;
@@ -14,9 +28,9 @@ class Game
         currentRoom.StartRoom();
     }
 
-    static void SaveGame(string filePath)
+    static void SaveGame(string filePath, decimal value)
     {
-
+        File.WriteAllText(filePath, JsonSerializer.Serialize(value));
     }
 
     internal static void StartGame()
@@ -45,6 +59,7 @@ class Game
 
                 if (health <= 0)
                 {
+                    SaveGame(saveFilePath, score);
                     foreach (RoomObject roomObject in currentRoom.RoomObjects)
                         roomObject.remove = true;
 
@@ -54,7 +69,7 @@ class Game
                 }
 
                 List<Coin> coins = currentRoom.RoomObjects.Where(c => c is Coin).Select(c => c as Coin).ToList();
-				if (AllCoinsCollected(coins))
+                if (AllCoinsCollected(coins))
                 {
                     foreach (Coin coin in coins)
                     {
@@ -66,6 +81,11 @@ class Game
                 window.Display();
             }
         }
+    }
+
+    public static void CalculateHighScore()
+    {
+        
     }
 
     public static bool AllCoinsCollected(List<Coin> coins)
